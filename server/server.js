@@ -63,7 +63,8 @@ app.get('/public/static/images/:filename', (req, res) => {
     if (err) {
       const status = err.status || 500;
       const body = err.message || 'Something went wrong';
-      res.status(status).json({ error: body });
+      res.status(status).send(body);
+      res.status(err.status).end();
     }
   });
 });
