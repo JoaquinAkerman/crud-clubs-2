@@ -1,3 +1,4 @@
+const cors = require('cors'); // Agrega esta línea
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -7,6 +8,8 @@ const multer = require('multer');
 const app = express();
 const clubsDataBase = require('./clubs.json');
 const { generateId } = require('./modules/idServices');
+
+app.use(cors());
 
 app.set('views', path.join(__dirname, 'views'));
 
