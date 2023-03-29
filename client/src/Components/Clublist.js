@@ -1,16 +1,19 @@
 import React from 'react';
+import { serverBaseUrl } from '../modules/serverUrl';
+
+const serverImagesBaseUrl = `${serverBaseUrl}public/static/images/`;
 
 const Navbar = () => {
   return (
-    <nav class='navbar navbar-expand-lg navbar-light bg-light'>
+    <nav className='navbar navbar-expand-lg navbar-light bg-light'>
       <a
-        class='navbar-brand'
+        className='navbar-brand'
         href='/'
       >
         CRUD Clubs
       </a>
       <button
-        class='navbar-toggler'
+        className='navbar-toggler'
         type='button'
         data-toggle='collapse'
         data-target='#navbarNav'
@@ -18,39 +21,39 @@ const Navbar = () => {
         aria-expanded='false'
         aria-label='Toggle navigation'
       >
-        <span class='navbar-toggler-icon'></span>
+        <span className='navbar-toggler-icon'></span>
       </button>
 
       <div
-        class='collapse navbar-collapse'
+        className='collapse navbar-collapse'
         id='navbarNav'
       >
-        <ul class='navbar-nav mr-auto'>
-          <li class='nav-item'>
+        <ul className='navbar-nav mr-auto'>
+          <li className='nav-item'>
             <a
-              class='nav-link'
+              className='nav-link'
               href='/'
             >
               Home
             </a>
           </li>
-          <li class='nav-item'>
+          <li className='nav-item'>
             <a
-              class='nav-link'
+              className='nav-link'
               href='/clubs/new'
             >
               Create Club
             </a>
           </li>
         </ul>
-        <ul class='navbar-nav'>
-          <li class='nav-item'>
+        <ul className='navbar-nav'>
+          <li className='nav-item'>
             <form
               method='post'
               action='/reset-clubs'
             >
               <button
-                class='btn btn-info'
+                className='btn btn-info'
                 type='submit'
               >
                 Reset Clubs
@@ -63,11 +66,24 @@ const Navbar = () => {
   );
 };
 
+const Title = () => {
+  return (
+    <div className='title-container'>
+      <h1 id='title'>Club List</h1>
+      <img
+        src={serverImagesBaseUrl + 'soccer-ball.png'}
+        alt='Soccer ball'
+        className='soccer-ball-img'
+      />
+    </div>
+  );
+};
+
 const ClubList = ({ clubs }) => {
   return (
     <div id='app'>
       <Navbar />
-      <h1 id='title'>Club List</h1>
+      <Title />
       <ul>
         {clubs.map((club) => (
           <li
@@ -75,7 +91,7 @@ const ClubList = ({ clubs }) => {
             className='club-container'
           >
             <img
-              src={club.image}
+              src={serverImagesBaseUrl + club.id + '.png'}
               alt={club.name}
               className='club-image'
             />
@@ -88,9 +104,9 @@ const ClubList = ({ clubs }) => {
               </p>
             </div>
             <div className='club-buttons'>
-              <button class='btn btn-info'>Ver club</button>
-              <button class='btn btn-warning'>Editar club</button>
-              <button class='btn btn-danger'>Borrar club</button>
+              <button className='btn btn-info'>Ver club</button>
+              <button className='btn btn-warning'>Editar club</button>
+              <button className='btn btn-danger'>Borrar club</button>
             </div>
           </li>
         ))}

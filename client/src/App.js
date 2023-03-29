@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import ClubList from './Components/Clublist';
 import './App.css';
+import { serverBaseUrl } from './modules/serverUrl';
 
 class App extends Component {
   state = {
@@ -9,7 +10,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    fetch('http://localhost:3030/')
+    fetch(serverBaseUrl)
       .then((res) => res.json())
       .then((data) => {
         this.setState({ clubs: data.clubs });
