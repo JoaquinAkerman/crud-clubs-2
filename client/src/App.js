@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 
 import ClubList from './Components/Clublist';
+import ClubDetails from './Components/ClubDetails';
 import './App.css';
 import { serverBaseUrl } from './modules/serverUrl';
 
 class App extends Component {
   state = {
     clubs: [],
+    selectedClub: null,
   };
 
   componentDidMount() {
@@ -17,11 +19,27 @@ class App extends Component {
       })
       .catch((err) => console.log(err));
   }
+  handleClubSelect = (club) => {
+    this.setState({ selectedClub: club });
+  };
 
   render() {
-    const { clubs } = this.state;
+    const { clubs, selectedClub } = this.state;
 
-    return <ClubList clubs={clubs} />;
+    return (
+      <div id='app'>
+        <ClubList
+          clubs={clubs}
+          onClubSelect={this.handleClubSelect}
+        />
+        {selectedClub && (
+          <ClubDetails
+            club={selectedClub}
+            onClose={() => this.setState({ selectedClub: null })}
+          />
+        )}
+      </div>
+    );
   }
 }
 

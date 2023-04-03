@@ -11,13 +11,23 @@
 }
 
 .club-container {
-  /* display: flex; */
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 10px;
   border-color: grey;
   border-style: solid;
   border-radius: 5px;
+}
+
+.clubDetails-container {
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  border-color: grey;
+  border-style: solid;
+  border-radius: 5px;
+  padding-left: 15px;
+  max-width: 700px;
 }
 
 .club-image {
@@ -51,4 +61,11 @@ ul {
   margin-left: auto;
   width: 100px;
   height: 100px;
+}
+.hideme {
+  display: none;
+}
+.map-container {
+  width: 400px;
+  height: 350px;
 }

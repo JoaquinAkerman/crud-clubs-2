@@ -37,6 +37,7 @@ app.get('/clubs/:id', (req, res) => {
     if (err) throw err;
     const clubs = JSON.parse(data);
     const club = clubs.find((c) => c.id == id);
+    console.log(club.id);
     if (club) {
       res.json({ club });
     } else {
