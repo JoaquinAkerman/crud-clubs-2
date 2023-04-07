@@ -3,11 +3,14 @@ import ClubList from './Components/Clublist';
 import ClubDetails from './Components/ClubDetails';
 import './App.css';
 import { fetchClubs } from './modules/api';
+import Navbar from './Components/Navbar';
+import Title from './Components/Title';
 
 class App extends Component {
   state = {
     clubs: [],
     selectedClub: null,
+    showDetails: false,
   };
 
   componentDidMount() {
@@ -19,22 +22,32 @@ class App extends Component {
   }
 
   handleClubSelect = (club) => {
-    this.setState({ selectedClub: club });
+    this.setState({ selectedClub: club, showDetails: true });
+  };
+
+  handleCloseDetails = () => {
+    this.setState({ showDetails: false });
   };
 
   render() {
-    const { clubs, selectedClub } = this.state;
+    const { clubs, selectedClub, showDetails } = this.state;
 
     return (
       <div id='app'>
-        <ClubList
-          clubs={clubs}
-          onClubSelect={this.handleClubSelect}
-        />
-        {selectedClub && (
-          <ClubDetails
-            club={selectedClub}
-            onClose={() => this.setState({ selectedClub: null })}
+        <Navbar />
+        <Title />
+        {showDetails && selectedClub && (
+          <div className='club-details'>
+            <ClubDetails
+              club={selectedClub}
+              onClose={this.handleCloseDetails}
+            />
+          </div>
+        )}
+        {!showDetails && (
+          <ClubList
+            clubs={clubs}
+            onClubSelect={this.handleClubSelect}
           />
         )}
       </div>
