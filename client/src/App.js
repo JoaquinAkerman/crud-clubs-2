@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-
 import ClubList from './Components/Clublist';
 import ClubDetails from './Components/ClubDetails';
 import './App.css';
-import { serverBaseUrl } from './modules/serverUrl';
+import { fetchClubs } from './modules/api';
 
 class App extends Component {
   state = {
@@ -12,13 +11,13 @@ class App extends Component {
   };
 
   componentDidMount() {
-    fetch(serverBaseUrl)
-      .then((res) => res.json())
-      .then((data) => {
-        this.setState({ clubs: data.clubs });
+    fetchClubs()
+      .then((clubs) => {
+        this.setState({ clubs });
       })
       .catch((err) => console.log(err));
   }
+
   handleClubSelect = (club) => {
     this.setState({ selectedClub: club });
   };
