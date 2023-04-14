@@ -43,7 +43,12 @@ const ClubDetails = ({ club, onClose }) => {
         latitude={clubDetails.latitude}
         longitude={clubDetails.longitude}
       />
-      <button onClick={onClose}>Close</button>
+      <button
+        className='btn btn-danger'
+        onClick={onClose}
+      >
+        Close
+      </button>
     </div>
   );
 };

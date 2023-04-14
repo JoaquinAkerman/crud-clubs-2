@@ -5,6 +5,7 @@ import './App.css';
 import { fetchClubs } from './modules/api';
 import Navbar from './Components/Navbar';
 import Title from './Components/Title';
+import { handleClubSelect, handleCloseDetails } from './modules/clubHandlers';
 
 class App extends Component {
   state = {
@@ -22,11 +23,11 @@ class App extends Component {
   }
 
   handleClubSelect = (club) => {
-    this.setState({ selectedClub: club, showDetails: true });
+    handleClubSelect(club, this.setState.bind(this));
   };
 
   handleCloseDetails = () => {
-    this.setState({ showDetails: false });
+    handleCloseDetails(this.setState.bind(this));
   };
 
   render() {
