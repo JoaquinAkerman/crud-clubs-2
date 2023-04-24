@@ -1,7 +1,7 @@
 import { handleClubSelect, handleCloseDetails } from '../modules/clubHandlers';
 
 describe('handleClubSelect', () => {
-  it('debería actualizar el estado con el club seleccionado', () => {
+  it('should update state with selected club', () => {
     const callback = jest.fn();
     const club = { id: 1, name: 'Club 1' };
     handleClubSelect(club, callback);
@@ -13,7 +13,7 @@ describe('handleClubSelect', () => {
 });
 
 describe('handleCloseDetails', () => {
-  it('debería actualizar el estado para ocultar los detalles', () => {
+  it('should update state for hide details', () => {
     const callback = jest.fn();
     handleCloseDetails(callback);
     expect(callback).toHaveBeenCalledWith({ showDetails: false });
