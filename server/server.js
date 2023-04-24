@@ -32,11 +32,11 @@ app.get('/clubs/new', (req, res) => {
 
 // Setting up the route to display a particular club
 app.get('/clubs/:id', (req, res) => {
-  const { id } = req.params;
+  const id = parseInt(req.params.id);
   fs.readFile('clubs.json', (err, data) => {
     if (err) throw err;
     const clubs = JSON.parse(data);
-    const club = clubs.find((c) => c.id == id);
+    const club = clubs.find((c) => c.id === id);
     if (club) {
       res.json({ club });
     } else {
@@ -48,11 +48,11 @@ app.get('/clubs/:id', (req, res) => {
 // Setting up the route to display the form for editing an existing club
 app.get('/clubs/edit/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-    const club = clubsDataBase.find((obj) => obj.id == id);
+    const id = parseInt(req.params.id);
+    const club = clubsDataBase.find((obj) => obj.id === id);
     res.render('edit', { club });
   } catch (err) {
-    res.status(500).json({ error: `${err}` });
+    res.status(404).json({ error: ` "error":"Club not found" ${err}` });
   }
 });
 
@@ -73,8 +73,8 @@ app.get('/public/static/images/:filename', (req, res) => {
 
 // Config of the route to process the creation of a new club
 app.post('/clubs/new', (req, res) => {
-  fs.readFile('clubs.json', (err, data) => {
-    if (err) throw err;
+  fs.readFile('clubs.json', (readErr, data) => {
+    if (readErr) throw readErr;
     const clubs = JSON.parse(data);
     const newClub = {
       id: generateId(clubs),
@@ -91,8 +91,8 @@ app.post('/clubs/new', (req, res) => {
       venue: req.body.venue,
     };
     clubs.push(newClub);
-    fs.writeFile('clubs.json', JSON.stringify(clubs), (err) => {
-      if (err) throw err;
+    fs.writeFile('clubs.json', JSON.stringify(clubs), (writeErr) => {
+      if (writeErr) throw writeErr;
       res.redirect('/');
     });
   });
@@ -101,8 +101,8 @@ app.post('/clubs/new', (req, res) => {
 // Configuring the route to handle editing an existing club
 app.post('/clubs/edit/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-    const clubIndex = clubsDataBase.findIndex((obj) => obj.id == id);
+    const id = parseInt(req.params.id);
+    const clubIndex = clubsDataBase.findIndex((obj) => obj.id === id);
     if (clubIndex >= 0) {
       const editedClub = {
         id,
@@ -133,8 +133,8 @@ app.post('/clubs/edit/:id', async (req, res) => {
 // Setting up the route to handle the deletion of an existing club
 app.post('/clubs/delete/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-    const clubIndex = clubsDataBase.findIndex((obj) => obj.id == id);
+    const { id } = parseInt(req.params.id);
+    const clubIndex = clubsDataBase.findIndex((obj) => obj.id === id);
     if (clubIndex >= 0) {
       clubsDataBase.splice(clubIndex, 1);
       fs.writeFile('clubs.json', JSON.stringify(clubsDataBase), (err) => {
@@ -163,8 +163,8 @@ const upload = multer({ storage });
 
 // Configuring the route to handle file uploads
 app.post('/clubs/upload/:id', upload.single('crestUrl'), (req, res) => {
-  const { id } = req.params;
-  const clubIndex = clubsDataBase.findIndex((obj) => obj.id == id);
+  const { id } = parseInt(req.params.id);
+  const clubIndex = clubsDataBase.findIndex((obj) => obj.id === id);
   if (clubIndex >= 0) {
     clubsDataBase[clubIndex].crestUrl = `/static/images/${req.file.filename}`;
     fs.writeFile('clubs.json', JSON.stringify(clubsDataBase), (err) => {
