@@ -27,6 +27,7 @@ app.get('/', (req, res) => {
 
 // Setting up the route to display the form for creating a new club
 app.get('/clubs/new', (req, res) => {
+  console.log('GET /clubs/new');
   res.render('new');
 });
 
