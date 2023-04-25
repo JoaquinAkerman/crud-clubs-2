@@ -69,3 +69,14 @@ ul {
   width: 400px;
   height: 350px;
 }
+.new-club-form {
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  border-color: grey;
+  border-style: solid;
+  border-radius: 5px;
+  padding-left: 15px;
+  max-width: 700px;
+  position: bottom;
+}

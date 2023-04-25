@@ -2,10 +2,11 @@ import React from 'react';
 
 export const NewClubForm = () => {
   return (
-    <div>
+    <div className='new-club-form'>
       <h1>New club</h1>
 
       <form
+        className=''
         action='/clubs/new'
         method='POST'
       >
@@ -108,6 +109,7 @@ export const NewClubForm = () => {
         <button
           id='save'
           type='submit'
+          className='btn btn-primary'
         >
           Save
         </button>
