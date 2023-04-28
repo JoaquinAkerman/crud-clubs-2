@@ -4,10 +4,11 @@
   "description": "Crud clubs 2",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start-server": "cd server && npm run start",
+    "start-client": "cd client && npm run start",
+    "start": "concurrently \"npm run start-server\" \"npm run start-client\"",
     "dev": "nodemon server.js",
-    "build": "cd client && npm run build",
-    "test": "jest"
+    "build": "cd client && npm run build"
   },
   "keywords": [
     "node",
@@ -23,10 +24,11 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7",
-    "jest": "^27.2.5",
     "babel-jest": "^27.2.5",
-    "babel-preset-react-app": "^10.0.0"
+    "babel-preset-react-app": "^10.0.0",
+    "concurrently": "^8.0.1",
+    "jest": "^27.2.5",
+    "nodemon": "^2.0.22"
   },
   "engines": {
     "node": ">=12.0.0"

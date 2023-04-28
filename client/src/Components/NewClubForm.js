@@ -6,11 +6,10 @@ export const NewClubForm = () => {
       <h1>New club</h1>
 
       <form
-        className=''
-        action='/clubs/new'
+        action='http://localhost:3030/clubs/new'
         method='POST'
       >
-        <div>
+        <div className='form-group'>
           <label htmlFor='name'>Name:</label>
           <input
             type='text'
@@ -18,7 +17,7 @@ export const NewClubForm = () => {
             name='name'
           />
         </div>
-        <div>
+        <div className='form-group'>
           <label htmlFor='shortName'>Shortname:</label>
           <input
             type='text'
@@ -26,7 +25,7 @@ export const NewClubForm = () => {
             name='shortName'
           />
         </div>
-        <div>
+        <div className='form-group'>
           <label htmlFor='tla'>TLA:</label>
           <input
             type='text'
@@ -34,7 +33,7 @@ export const NewClubForm = () => {
             name='tla'
           />
         </div>
-        <div>
+        <div className='form-group'>
           <label htmlFor='crestUrl'>Crest URL:</label>
           <input
             type='text'
@@ -42,7 +41,7 @@ export const NewClubForm = () => {
             name='crestUrl'
           />
         </div>
-        <div>
+        <div className='form-group'>
           <label htmlFor='address'>Address:</label>
           <input
             type='text'
@@ -50,7 +49,7 @@ export const NewClubForm = () => {
             name='address'
           />
         </div>
-        <div>
+        <div className='form-group'>
           <label htmlFor='phone'>Phone:</label>
           <input
             type='text'
@@ -58,7 +57,7 @@ export const NewClubForm = () => {
             name='phone'
           />
         </div>
-        <div>
+        <div className='form-group'>
           <label htmlFor='website'>Website:</label>
           <input
             type='text'
@@ -66,7 +65,7 @@ export const NewClubForm = () => {
             name='website'
           />
         </div>
-        <div>
+        <div className='form-group'>
           <label htmlFor='email'>Email:</label>
           <input
             type='email'
@@ -74,7 +73,7 @@ export const NewClubForm = () => {
             name='email'
           />
         </div>
-        <div>
+        <div className='form-group'>
           <label htmlFor='founded'>Founded:</label>
           <input
             type='number'
@@ -82,7 +81,7 @@ export const NewClubForm = () => {
             name='founded'
           />
         </div>
-        <div>
+        <div className='form-group'>
           <label htmlFor='clubColors'>Club colors:</label>
           <input
             type='text'
@@ -90,7 +89,7 @@ export const NewClubForm = () => {
             name='clubColors'
           />
         </div>
-        <div>
+        <div className='form-group'>
           <label htmlFor='venue'>Venue:</label>
           <input
             type='text'
@@ -98,7 +97,7 @@ export const NewClubForm = () => {
             name='venue'
           />
         </div>
-        <div>
+        <div className='form-group'>
           <label htmlFor='lastUpdated'>Last upddated:</label>
           <input
             type='text'

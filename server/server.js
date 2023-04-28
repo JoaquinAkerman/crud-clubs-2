@@ -16,19 +16,14 @@ app.set('views', path.join(__dirname, 'views'));
 // Setting up the middleware to process the data sent from the form
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Setting up the root route to display all clubs
+// // Setting up the root route to display all clubs
 app.get('/', (req, res) => {
   fs.readFile('clubs.json', (err, data) => {
+    console.log('GET /');
     if (err) throw err;
     const clubs = JSON.parse(data);
     res.json({ clubs });
   });
-});
-
-// Setting up the route to display the form for creating a new club
-app.get('/clubs/new', (req, res) => {
-  console.log('GET /clubs/new');
-  res.render('new');
 });
 
 // Setting up the route to display a particular club
@@ -74,6 +69,8 @@ app.get('/public/static/images/:filename', (req, res) => {
 
 // Config of the route to process the creation of a new club
 app.post('/clubs/new', (req, res) => {
+  const frontEndLocalhost = 'http://localhost:3000';
+  console.log('POST /clubs/new');
   fs.readFile('clubs.json', (readErr, data) => {
     if (readErr) throw readErr;
     const clubs = JSON.parse(data);
@@ -94,7 +91,7 @@ app.post('/clubs/new', (req, res) => {
     clubs.push(newClub);
     fs.writeFile('clubs.json', JSON.stringify(clubs), (writeErr) => {
       if (writeErr) throw writeErr;
-      res.redirect('/');
+      res.redirect(frontEndLocalhost);
     });
   });
 });

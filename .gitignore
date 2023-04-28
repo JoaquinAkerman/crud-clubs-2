@@ -2,3 +2,5 @@ server/node_modules
 my-app/node_modules
 server/coverage
 my-app/coverage
+coverage
+node_modules

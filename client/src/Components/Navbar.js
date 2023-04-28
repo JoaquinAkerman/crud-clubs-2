@@ -37,20 +37,19 @@ const Navbar = () => {
           <ul className='navbar-nav mr-auto'>
             <li className='nav-item'>
               <a
-                className='nav-link'
+                className='nav-link '
                 href='/'
               >
                 Home
               </a>
             </li>
             <li className='nav-item'>
-              <a
-                className='nav-link'
-                href='#'
+              <button
+                className='nav-link btn btn-link'
                 onClick={handleCreateClubClick}
               >
                 Create Club
-              </a>
+              </button>
             </li>
           </ul>
           <ul className='navbar-nav'>
