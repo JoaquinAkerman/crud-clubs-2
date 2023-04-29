@@ -1,6 +1,6 @@
 import { loadMapScript, API_KEY } from '../modules/googleMaps';
 describe('loadMapScript', () => {
-  jest.setTimeout(20000);
+  jest.setTimeout(10000);
   test('loads Google Maps API', async () => {
     const script = document.createElement('script');
     script.onload = jest.fn(() => {

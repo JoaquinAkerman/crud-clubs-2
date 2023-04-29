@@ -22,7 +22,7 @@ const ClubDetails = ({ club, onClose }) => {
 
   return (
     <div className='clubDetails-container'>
-      <h2>{clubDetails.name}</h2>
+      <h2 id={'clubName' + clubDetails.tla}>{clubDetails.name}</h2>
       <img
         src={imagePath}
         alt={clubDetails.name}
@@ -54,5 +54,3 @@ const ClubDetails = ({ club, onClose }) => {
 };
 
 export default ClubDetails;
-
-////////////////////////
