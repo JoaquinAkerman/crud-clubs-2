@@ -69,10 +69,29 @@ ul {
   width: 400px;
   height: 350px;
 }
+
+.new-club-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+  border: 5px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+}
+
 .new-club-form form {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+}
+
+.save-button {
+  grid-column: 1 / 3;
+  justify-self: center;
 }
 
 .form-group {

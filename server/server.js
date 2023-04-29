@@ -11,8 +11,6 @@ const { generateId } = require('./modules/idServices');
 
 app.use(cors());
 
-app.set('views', path.join(__dirname, 'views'));
-
 // Setting up the middleware to process the data sent from the form
 app.use(bodyParser.urlencoded({ extended: true }));
 

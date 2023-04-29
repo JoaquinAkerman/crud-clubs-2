@@ -8,6 +8,7 @@ export const NewClubForm = () => {
       <form
         action='http://localhost:3030/clubs/new'
         method='POST'
+        encType='multipart/form-data'
       >
         <div className='form-group'>
           <label htmlFor='name'>Name:</label>
@@ -98,17 +99,26 @@ export const NewClubForm = () => {
           />
         </div>
         <div className='form-group'>
-          <label htmlFor='lastUpdated'>Last upddated:</label>
+          <label htmlFor='lastUpdated'>Last updated:</label>
           <input
             type='text'
             id='lastUpdated'
             name='lastUpdated'
           />
         </div>
+        <div className='form-group'>
+          <label htmlFor='image'>Image:</label>
+          <input
+            type='file'
+            id='image'
+            name='image'
+            accept='image/*'
+          />
+        </div>
         <button
           id='save'
           type='submit'
-          className='btn btn-primary'
+          className='btn btn-primary save-button'
         >
           Save
         </button>
