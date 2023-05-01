@@ -1,7 +1,6 @@
 const cors = require('cors'); // Agrega esta línea
 const express = require('express');
 const fs = require('fs');
-const path = require('path');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 
@@ -17,7 +16,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // // Setting up the root route to display all clubs
 app.get('/', (req, res) => {
   fs.readFile('clubs.json', (err, data) => {
-    console.log('GET /');
     if (err) throw err;
     const clubs = JSON.parse(data);
     res.json({ clubs });
@@ -68,7 +66,6 @@ app.get('/public/static/images/:filename', (req, res) => {
 // Config of the route to process the creation of a new club
 app.post('/clubs/new', (req, res) => {
   const frontEndLocalhost = 'http://localhost:3000';
-  console.log('POST /clubs/new');
   fs.readFile('clubs.json', (readErr, data) => {
     if (readErr) throw readErr;
     const clubs = JSON.parse(data);
@@ -77,7 +74,6 @@ app.post('/clubs/new', (req, res) => {
       name: req.body.name,
       shortName: req.body.shortName,
       tla: req.body.tla,
-      crestUrl: req.body.crestUrl,
       address: req.body.address,
       phone: req.body.phone,
       website: req.body.website,
@@ -85,6 +81,7 @@ app.post('/clubs/new', (req, res) => {
       founded: req.body.founded,
       clubColors: req.body.clubColors,
       venue: req.body.venue,
+      imagePath: '/public/static/images/default.png', // default image path
     };
     clubs.push(newClub);
     fs.writeFile('clubs.json', JSON.stringify(clubs), (writeErr) => {
@@ -127,18 +124,18 @@ app.post('/clubs/edit/:id', async (req, res) => {
 });
 
 // Setting up the route to handle the deletion of an existing club
-app.post('/clubs/delete/:id', async (req, res) => {
+app.delete('/clubs/delete/:id', async (req, res) => {
   try {
-    const { id } = parseInt(req.params.id);
+    const id = parseInt(req.params.id);
     const clubIndex = clubsDataBase.findIndex((obj) => obj.id === id);
     if (clubIndex >= 0) {
       clubsDataBase.splice(clubIndex, 1);
       fs.writeFile('clubs.json', JSON.stringify(clubsDataBase), (err) => {
         if (err) throw err;
-        res.redirect('/');
+        res.status(200).json({ message: 'Club deleted successfully' });
       });
     } else {
-      res.status(404).json({ error: 'Club not found' });
+      res.status(404).json({ error: `Club not found id=${id}` });
     }
   } catch (err) {
     res.status(500).json({ error: `${err} ` });

@@ -1,14 +1,16 @@
 import React from 'react';
 
+import { serverBaseUrl } from '../modules/serverUrl';
+
 export const NewClubForm = () => {
+  const serverNewClubBaseUrl = `${serverBaseUrl}/clubs/new`;
   return (
     <div className='new-club-form'>
       <h1>New club</h1>
 
       <form
-        action='http://localhost:3030/clubs/new'
+        action={serverNewClubBaseUrl}
         method='POST'
-        encType='multipart/form-data'
       >
         <div className='form-group'>
           <label htmlFor='name'>Name:</label>
@@ -34,14 +36,7 @@ export const NewClubForm = () => {
             name='tla'
           />
         </div>
-        <div className='form-group'>
-          <label htmlFor='crestUrl'>Crest URL:</label>
-          <input
-            type='text'
-            id='crestUrl'
-            name='crestUrl'
-          />
-        </div>
+        
         <div className='form-group'>
           <label htmlFor='address'>Address:</label>
           <input
@@ -98,23 +93,9 @@ export const NewClubForm = () => {
             name='venue'
           />
         </div>
-        <div className='form-group'>
-          <label htmlFor='lastUpdated'>Last updated:</label>
-          <input
-            type='text'
-            id='lastUpdated'
-            name='lastUpdated'
-          />
-        </div>
-        <div className='form-group'>
-          <label htmlFor='image'>Image:</label>
-          <input
-            type='file'
-            id='image'
-            name='image'
-            accept='image/*'
-          />
-        </div>
+        
+       
+          
         <button
           id='save'
           type='submit'

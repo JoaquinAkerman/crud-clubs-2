@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import Map from './Map';
-import { serverBaseUrl } from '../modules/serverUrl';
+import Map from "./Map";
+import { serverBaseUrl } from "../modules/serverUrl";
 
 const ClubDetails = ({ club, onClose }) => {
+  const serverImagesBaseUrl = `${serverBaseUrl}/public/static/images/`;
   const { id } = club;
-  const imagePath = `${serverBaseUrl}/public/static/images/${id}.png`;
+  const clubImagePath = `${serverImagesBaseUrl}${id}.png`;
   const [clubDetails, setClubDetails] = React.useState(null);
 
   React.useEffect(() => {
@@ -21,11 +22,12 @@ const ClubDetails = ({ club, onClose }) => {
   }
 
   return (
-    <div className='clubDetails-container'>
-      <h2 id={'clubName' + clubDetails.tla}>{clubDetails.name}</h2>
+    <div className="clubDetails-container">
+      <h2 id={"clubName" + clubDetails.tla}>{clubDetails.name}</h2>
       <img
-        src={imagePath}
-        alt={clubDetails.name}
+        className="club-image-details"
+        src={clubImagePath}
+        alt={clubDetails.name+" logo"}
       />
       <p>ID: {clubDetails.id}</p>
       <p>Shortname: {clubDetails.shortName}</p>
@@ -39,16 +41,11 @@ const ClubDetails = ({ club, onClose }) => {
       <p>Founded: {clubDetails.founded}</p>
       <p>Club colors: {clubDetails.clubColors}</p>
       <p>Venue: {clubDetails.venue}</p>
-      <Map
-        latitude={clubDetails.latitude}
-        longitude={clubDetails.longitude}
-      />
-      <button
-        className='btn btn-danger'
-        onClick={onClose}
-      >
+      <Map latitude={clubDetails.latitude} longitude={clubDetails.longitude} />
+      <button className="btn btn-danger" onClick={onClose}>
         Close
       </button>
+      
     </div>
   );
 };
