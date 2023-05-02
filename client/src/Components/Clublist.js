@@ -15,11 +15,13 @@ const ClubList = ({ clubs, onClubSelect }) => {
         <ul>
           {clubs.map((club) => (
             <li key={club.id} className="club-container">
-              <img
-                src={serverImagesBaseUrl+club.id+".png"}
-                alt={club.name+" logo"}
-                className="club-image"
-              />
+              <div className="club-logo-container">
+                <img
+                  src={serverImagesBaseUrl + club.id + ".png"}
+                  alt={club.name + " logo"}
+                  className="club-image"
+                />
+              </div>
               <div className="club-info">
                 <h2 id={club.tla + "-title"}>{club.name}</h2>
                 <p>{club.address}</p>
@@ -42,6 +44,25 @@ const ClubList = ({ clubs, onClubSelect }) => {
                 >
                   Delete club
                 </button>
+              </div>
+
+              <div className="upload-image-container">
+                <span className="upload-label">Upload club logo</span>
+                <form
+                  action={`${serverBaseUrl}/clubs/upload/${club.id}`}
+                  method="POST"
+                  encType="multipart/form-data"
+                >
+                  <input
+                    className="upload-input"
+                    type="file"
+                    name="clubLogo"
+                    accept=".png"
+                  />
+                  <button className="btn btn-primary" type="submit">
+                    Upload image
+                  </button>
+                </form>
               </div>
             </li>
           ))}

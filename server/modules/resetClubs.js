@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const backupClubs = require('../backupClubs/backupClubs.json');
+const backupClubs = require('../backupClubs/clubs.json');
 const clubsJson = require('../clubs.json');
 
 function resetClubs(req, res) {
@@ -9,7 +9,6 @@ function resetClubs(req, res) {
     fs.writeFileSync(clubsJson, backupData);
     res.status(200).json({ message: 'Clubs reset successfully' });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
 }

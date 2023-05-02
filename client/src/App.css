@@ -11,14 +11,49 @@
 }
 
 .club-container {
+  align-items: center;
+  margin-bottom: 20px;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 10px;
   border-color: grey;
   border-style: solid;
   border-radius: 5px;
+  padding: 10px;
 }
+.club-logo-container {
+  display: flex;
+  align-items: right;
+  margin-left: 20px;
+  margin-top: 20px;}
 
+  .club-image {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
+  
+
+  .upload-image-container form {
+    /* display: flex; */
+    flex-direction: column;
+    margin: 5px;
+  }
+
+  .upload-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .upload-input {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    
+  }
+  
 .clubDetails-container {
   flex-direction: row;
   justify-content: space-between;

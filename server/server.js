@@ -3,15 +3,20 @@ const express = require('express');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const multer = require('multer');
+const { generateId } = require('./modules/idServices');
+const clubsDataBase = require('./clubs.json');
 
 const app = express();
-const clubsDataBase = require('./clubs.json');
-const { generateId } = require('./modules/idServices');
-
+const frontEndServer = 'http://localhost:3000';
 app.use(cors());
 
 // Setting up the middleware to process the data sent from the form
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', 'default-src \'self\'; script-src \'self\' \'unsafe-inline\'; img-src \'self\' data:; style-src \'self\' \'unsafe-inline\'; font-src \'self\'; object-src \'none\'; base-uri \'self\';');
+  next();
+});
 
 // // Setting up the root route to display all clubs
 app.get('/', (req, res) => {
@@ -30,6 +35,7 @@ app.get('/clubs/:id', (req, res) => {
     const clubs = JSON.parse(data);
     const club = clubs.find((c) => c.id === id);
     if (club) {
+      console.log(`${club.id}fetched`);
       res.json({ club });
     } else {
       res.status(404).json({ error: 'Club not found' });
@@ -81,7 +87,6 @@ app.post('/clubs/new', (req, res) => {
       founded: req.body.founded,
       clubColors: req.body.clubColors,
       venue: req.body.venue,
-      imagePath: '/public/static/images/default.png', // default image path
     };
     clubs.push(newClub);
     fs.writeFile('clubs.json', JSON.stringify(clubs), (writeErr) => {
@@ -92,7 +97,7 @@ app.post('/clubs/new', (req, res) => {
 });
 
 // Configuring the route to handle editing an existing club
-app.post('/clubs/edit/:id', async (req, res) => {
+app.patch('/clubs/edit/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const clubIndex = clubsDataBase.findIndex((obj) => obj.id === id);
@@ -142,30 +147,41 @@ app.delete('/clubs/delete/:id', async (req, res) => {
   }
 });
 
-// Setting up Multer to handle file uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
+// code to prcoess the upload images
+
+const storagePath = multer.diskStorage({
+  // set the storage path
+  destination(req, file, cb) {
     cb(null, './public/static/images');
   },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
+  filename(req, file, cb) {
+    // set the file name
+    cb(null, `${req.params.id}.png`);
   },
 });
 
-const upload = multer({ storage });
+const uploadImage = multer({ storage: storagePath });
 
-// Configuring the route to handle file uploads
-app.post('/clubs/upload/:id', upload.single('crestUrl'), (req, res) => {
-  const { id } = parseInt(req.params.id);
-  const clubIndex = clubsDataBase.findIndex((obj) => obj.id === id);
-  if (clubIndex >= 0) {
-    clubsDataBase[clubIndex].crestUrl = `/static/images/${req.file.filename}`;
-    fs.writeFile('clubs.json', JSON.stringify(clubsDataBase), (err) => {
-      if (err) throw err;
-      res.redirect(`/clubs/${id}`);
-    });
-  } else {
-    res.status(404).json({ error: 'Club not found' });
+app.post('/clubs/upload/:id', uploadImage.single('clubLogo'), (req, res) => {
+  // Check if the image input is empty
+  if (!req.file) {
+    res.status(400).json({ message: 'Error, invalid or missing image file' });
+  }
+  // if not empty, redirect to the club page
+  return res.status(200).redirect(frontEndServer);
+});
+
+// code to process the reset of the clubs
+app.post('/reset-clubs', (req, res) => {
+  const pathbackupClubs = './backupClubs/backupClubs.json';
+  const pathClubsDataBase = './clubs.json';
+  try {
+    const backupData = fs.readFileSync(pathbackupClubs);
+    fs.writeFileSync(pathClubsDataBase, backupData);
+    res.status(200).render('processStatus', { message: 'Clubs reset successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).render('processStatus', { message: 'Internal server error' });
   }
 });
 
