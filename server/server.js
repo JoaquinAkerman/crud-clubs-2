@@ -3,6 +3,8 @@ const express = require('express');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const multer = require('multer');
+const path = require('path');
+
 const { generateId } = require('./modules/idServices');
 const clubsDataBase = require('./clubs.json');
 
@@ -14,7 +16,10 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
-  res.setHeader('Content-Security-Policy', 'default-src \'self\'; script-src \'self\' \'unsafe-inline\'; img-src \'self\' data:; style-src \'self\' \'unsafe-inline\'; font-src \'self\'; object-src \'none\'; base-uri \'self\';');
+  res.setHeader(
+    'Content-Security-Policy',
+    'default-src \'self\'; script-src \'self\' \'unsafe-inline\'; img-src \'self\' data:; style-src \'self\' \'unsafe-inline\'; font-src \'self\'; object-src \'none\'; base-uri \'self\';',
+  );
   next();
 });
 
@@ -97,7 +102,7 @@ app.post('/clubs/new', (req, res) => {
 });
 
 // Configuring the route to handle editing an existing club
-app.patch('/clubs/edit/:id', async (req, res) => {
+app.put('/clubs/update/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const clubIndex = clubsDataBase.findIndex((obj) => obj.id === id);
@@ -118,7 +123,8 @@ app.patch('/clubs/edit/:id', async (req, res) => {
       clubsDataBase[clubIndex] = editedClub;
       fs.writeFile('clubs.json', JSON.stringify(clubsDataBase), (err) => {
         if (err) throw err;
-        res.redirect(`/clubs/${id}`);
+        console.log(`${editedClub.id} updated`);
+        res.redirect(frontEndServer);
       });
     } else {
       res.status(404).json({ error: 'Club not found' });
@@ -173,15 +179,34 @@ app.post('/clubs/upload/:id', uploadImage.single('clubLogo'), (req, res) => {
 
 // code to process the reset of the clubs
 app.post('/reset-clubs', (req, res) => {
-  const pathbackupClubs = './backupClubs/backupClubs.json';
+  const pathbackupClubs = './backupClubs/clubs.json';
   const pathClubsDataBase = './clubs.json';
+  const logosActualesDir = './public/static/images';
+  const logosBackupDir = './backupClubs/backupClubLogos';
   try {
+    // Reset clubs data
     const backupData = fs.readFileSync(pathbackupClubs);
     fs.writeFileSync(pathClubsDataBase, backupData);
-    res.status(200).render('processStatus', { message: 'Clubs reset successfully' });
+
+    // Reset club images
+    const clubData = JSON.parse(backupData.toString());
+    clubData.forEach((club) => {
+      const logoActualPath = path.join(logosActualesDir, `${club.id}.png`);
+      const logoBackupPath = path.join(logosBackupDir, `${club.id}.png`);
+
+      // Remove current logo if exists
+      if (fs.existsSync(logoActualPath)) {
+        fs.unlinkSync(logoActualPath);
+      }
+
+      // Copy backup logo to current logo path
+      fs.copyFileSync(logoBackupPath, logoActualPath);
+    });
+
+    res.redirect(`${frontEndServer}/clubs`);
   } catch (error) {
     console.error(error);
-    res.status(500).render('processStatus', { message: 'Internal server error' });
+    res.status(500).send({ message: 'Internal server error' });
   }
 });
 

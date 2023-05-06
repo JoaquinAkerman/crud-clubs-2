@@ -2,50 +2,68 @@ import React from "react";
 
 import Map from "./Map";
 import { serverBaseUrl } from "../modules/serverUrl";
+import { fetchClubs } from "../modules/api";
 
-const ClubDetails = ({ club, onClose }) => {
+const ClubDetails = ({
+  club: {
+    id,
+    name,
+    shortName,
+    tla,
+    address,
+    phone,
+    website,
+    email,
+    founded,
+    clubColors,
+    venue,
+    latitude,
+    longitude,
+  },
+  onClose,
+}) => {
   const serverImagesBaseUrl = `${serverBaseUrl}/public/static/images/`;
-  const { id } = club;
   const clubImagePath = `${serverImagesBaseUrl}${id}.png`;
+  // eslint-disable-next-line no-unused-vars
   const [clubDetails, setClubDetails] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    fetch(`${serverBaseUrl}/clubs/${id}`)
-      .then((res) => res.json())
+    setLoading(true);
+    fetchClubs()
       .then((data) => {
-        setClubDetails(data.club);
+        setClubDetails(data);
       })
-      .catch((err) => console.log(err));
+      .finally(() => {
+        setLoading(false);
+      });
   }, [id]);
-  if (!clubDetails) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="clubDetails-container">
-      <h2 id={"clubName" + clubDetails.tla}>{clubDetails.name}</h2>
+      <h2 id={`clubName${tla}`}>{name}</h2>
       <img
         className="club-image-details"
         src={clubImagePath}
-        alt={clubDetails.name+" logo"}
+        alt={`${name} logo`}
       />
-      <p>ID: {clubDetails.id}</p>
-      <p>Shortname: {clubDetails.shortName}</p>
-      <p>TLA: {clubDetails.tla}</p>
-      <p>Address: {clubDetails.address}</p>
-      <p>Phone: {clubDetails.phone}</p>
+      <p>ID: {id}</p>
+      <p>Shortname: {shortName}</p>
+      <p>TLA: {tla}</p>
+      <p>Address: {address}</p>
+      <p>Phone: {phone}</p>
       <p>
-        Website: <a href={clubDetails.website}>{clubDetails.website}</a>
+        Website: <a href={website}>{website}</a>
       </p>
-      <p>Email: {clubDetails.email}</p>
-      <p>Founded: {clubDetails.founded}</p>
-      <p>Club colors: {clubDetails.clubColors}</p>
-      <p>Venue: {clubDetails.venue}</p>
-      <Map latitude={clubDetails.latitude} longitude={clubDetails.longitude} />
+      <p>Email: {email}</p>
+      <p>Founded: {founded}</p>
+      <p>Club colors: {clubColors}</p>
+      <p>Venue: {venue}</p>
+      <Map latitude={latitude} longitude={longitude} />
       <button className="btn btn-danger" onClick={onClose}>
         Close
       </button>
-      
+      {loading ? <div>Loading...</div> : null}
     </div>
   );
 };
