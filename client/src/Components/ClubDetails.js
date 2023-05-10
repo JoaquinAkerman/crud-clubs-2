@@ -38,7 +38,6 @@ const ClubDetails = ({
         setLoading(false);
       });
   }, [id]);
-  console.log(typeof(latitude), typeof(longitude))
 
   return (
     <div className="clubDetails-container">
@@ -60,7 +59,7 @@ const ClubDetails = ({
       <p>Founded: {founded}</p>
       <p>Club colors: {clubColors}</p>
       <p>Venue: {venue}</p>
-      <Map latitude={latitude} longitude={longitude} />
+      <Map latitude={parseFloat(latitude)} longitude={parseFloat(longitude)} />
       <button className="btn btn-danger" onClick={onClose}>
         Close
       </button>

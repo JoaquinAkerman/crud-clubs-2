@@ -1,18 +1,20 @@
-const cors = require('cors'); // Agrega esta línea
+const cors = require('cors');
 const express = require('express');
-
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const path = require('path');
 const util = require('util');
-
 const { generateId } = require('./modules/idServices');
 const clubsDataBase = require('./clubs.json');
 
 const app = express();
 const frontEndServer = 'http://localhost:3000';
 app.use(cors());
+const corsOptions = {
+  origin: frontEndServer,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Setting up the middleware to process the data sent from the form
@@ -43,7 +45,6 @@ app.get('/clubs/:id', (req, res) => {
     const clubs = JSON.parse(data);
     const club = clubs.find((c) => c.id === id);
     if (club) {
-      console.log(`${club.id}fetched`);
       res.json({ club });
     } else {
       res.status(404).json({ error: 'Club not found' });
@@ -84,6 +85,8 @@ app.post('/clubs/new', (req, res) => {
       founded: req.body.founded,
       clubColors: req.body.clubColors,
       venue: req.body.venue,
+      latitude: parseFloat(req.body.latitude),
+      longitude: parseFloat(req.body.longitude),
     };
     clubs.push(newClub);
     fs.writeFile('clubs.json', JSON.stringify(clubs), (writeErr) => {
@@ -98,10 +101,9 @@ app.post('/clubs/new', (req, res) => {
 // read and write files with promises
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
-app.post('/clubs/edit/:id', async (req, res) => {
-  console.log('req.body', req.body);
-  const id = parseInt(req.params.id);
 
+app.post('/clubs/edit/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
   try {
     const data = await readFileAsync('clubs.json');
     const clubs = JSON.parse(data);
@@ -112,24 +114,50 @@ app.post('/clubs/edit/:id', async (req, res) => {
     }
 
     // Validating the request body
-    const requiredProperties = ['name', 'shortName', 'tla', 'address', 'phone', 'website', 'email', 'founded', 'clubColors', 'venue'];
-    const missingProperties = requiredProperties.filter((prop) => !(prop in req.body));
+    const requiredProperties = [
+      'name',
+      'shortName',
+      'tla',
+      'address',
+      'phone',
+      'website',
+      'email',
+      'founded',
+      'clubColors',
+      'venue',
+      'latitude',
+      'longitude',
+    ];
+    const missingProperties = requiredProperties.filter(
+      (prop) => !(prop in req.body),
+    );
     if (missingProperties.length > 0) {
-      return res.status(400).send({ error: `Missing properties: ${missingProperties.join(', ')}` });
+      return res
+        .status(400)
+        .send({ error: `Missing properties: ${missingProperties.join(', ')}` });
     }
 
     // Updating the club
     Object.keys(req.body).forEach((prop) => {
       if (prop in club) {
+        // setting latitud and longitud as numbers
+        if (prop === 'latitud' || prop === 'longitud') {
+          club[prop] = parseFloat(req.body[prop]);
+        }
+        // setting founded as number
+        if (prop === 'founded') {
+          club[prop] = parseInt(req.body[prop]);
+        }
         club[prop] = req.body[prop];
       }
     });
 
     await writeFileAsync('clubs.json', JSON.stringify(clubs));
-    res.redirect('/');
+
+    // Refreshing the page
+    return res.status(200).send({ message: 'Club edited successfully' });
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Error al actualizar el club');
+    return res.status(500).send('Error editing club');
   }
 });
 
@@ -204,7 +232,6 @@ app.post('/reset-clubs', (req, res) => {
 
     res.redirect(`${frontEndServer}/clubs`);
   } catch (error) {
-    console.error(error);
     res.status(500).send({ message: 'Internal server error' });
   }
 });

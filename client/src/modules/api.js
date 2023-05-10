@@ -55,7 +55,7 @@ export const handleUpdate = (club) => {
   })
     .then((res) => {
       if (res.status === 200) {
-        console.log("Club actualizado con éxito");
+        window.location.reload();
       } else {
         return res.json().then((error) => {
           console.log(error);

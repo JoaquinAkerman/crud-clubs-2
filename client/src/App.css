@@ -124,7 +124,7 @@ ul {
   border: 5px solid #ccc;
   padding: 5px;
   border-radius: 5px;
-  background-color: #f2f2f2;
+  background-color: #f0e5d8
 }
 
 .new-club-form form {
@@ -133,11 +133,24 @@ ul {
   gap: 10px;
 }
 
+.new-club-form-buttons{
+  padding: 20px;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.new-club-form-buttons button {
+  margin: 10px;
+}
+
 .edit-club-form form {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
+
+
 
 .save-button {
   grid-column: 1 / 3;
@@ -150,11 +163,34 @@ ul {
   border: 5px solid #ccc;
   padding: 5px;
   border-radius: 5px;
+  margin: 0 10px;
+  flex: 1; 
+  
 }
 
 .form-group input {
   border: 1px solid #ccc;
   padding: 5px;
+  border-radius: 5px;
+}
+
+.location-group {
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 10px;
+  background: radial-gradient( #fff, #ccc);
+}
+
+.location-group > .form-group {
+  border: 5px solid #ccc;
+  padding: 5px;
+  margin: 5px;
+}
+
+.form-group label {
+  white-space: nowrap; 
 }
 
 .bottom-anchor {

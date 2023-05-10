@@ -124,9 +124,10 @@ const ClubList = ({ clubs, onClubSelect }) => {
               <div>
                 <label htmlFor="founded">Founded:</label>
                 <input
-                  type="text"
+                  type="number"
                   id="founded"
                   defaultValue={editClub.founded}
+                  min={0}
                 />
               </div>
               <div>
