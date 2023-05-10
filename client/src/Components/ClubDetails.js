@@ -38,6 +38,7 @@ const ClubDetails = ({
         setLoading(false);
       });
   }, [id]);
+  console.log(typeof(latitude), typeof(longitude))
 
   return (
     <div className="clubDetails-container">

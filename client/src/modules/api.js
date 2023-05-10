@@ -1,7 +1,5 @@
 import { serverBaseUrl } from "./serverUrl";
 
-const serverDeleteClubUrl = `${serverBaseUrl}/clubs/delete`;
-
 export const fetchClubs = () => {
   return fetch(serverBaseUrl)
     .then((res) => res.json())
@@ -13,7 +11,8 @@ export const fetchClubs = () => {
 };
 
 export const handleDelete = (club) => {
-  const confirmed = window.confirm(
+  const serverDeleteClubUrl = `${serverBaseUrl}/clubs/delete`;
+    const confirmed = window.confirm(
     `Are you sure you want to delete the club "${club.name}"?`
   );
   if (confirmed) {
@@ -36,17 +35,27 @@ export const handleDelete = (club) => {
   }
 };
 
+
 export const handleUpdate = (club) => {
   console.log(club);
-  return fetch(`${serverBaseUrl}/clubs/update/${club.id}`, {
-    method: "put",
+
+  // Verificar que todas las propiedades requeridas estén presentes en el objeto "club"
+  const requiredProperties = ["name", "shortName"];
+  const missingProperties = requiredProperties.filter((prop) => !(prop in club));
+  if (missingProperties.length > 0) {
+    throw new Error(`Missing properties: ${missingProperties.join(", ")}`);
+  }
+
+  return fetch(`${serverBaseUrl}/clubs/edit/${club.id}`, {
+    method: "post",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(club),
   })
     .then((res) => {
-      if (res.ok) {
+      if (res.status === 200) {
+        console.log("Club actualizado con éxito");
       } else {
         return res.json().then((error) => {
           console.log(error);
@@ -55,23 +64,26 @@ export const handleUpdate = (club) => {
       }
     })
     .catch((error) => {
-      console.log("paso esto " + error);
-      console.log("club que causa el error " + club.name);
+      console.log(error);
     });
 };
 
+
 export const handleResetClubsClick = () => {
-  fetch(`${serverBaseUrl}/reset-clubs`, {
-    method: "POST",
-  })
-    .then((response) => {
-      if (response.ok) {
-        window.location.reload();
-      } else {
-        console.log("Failed to reset clubs");
-      }
+  const confirmed = window.confirm("Are you sure you want to reset the clubs?");
+  if (confirmed) {
+    fetch(`${serverBaseUrl}/reset-clubs`, {
+      method: "POST",
     })
-    .catch((error) => {
-      console.error(error);
-    });
+      .then((response) => {
+        if (response.ok) {
+          window.location.reload();
+        } else {
+          console.log("Failed to reset clubs");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 };

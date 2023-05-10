@@ -1,9 +1,11 @@
 const cors = require('cors'); // Agrega esta línea
 const express = require('express');
+
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const path = require('path');
+const util = require('util');
 
 const { generateId } = require('./modules/idServices');
 const clubsDataBase = require('./clubs.json');
@@ -11,6 +13,7 @@ const clubsDataBase = require('./clubs.json');
 const app = express();
 const frontEndServer = 'http://localhost:3000';
 app.use(cors());
+app.use(express.json());
 
 // Setting up the middleware to process the data sent from the form
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -46,17 +49,6 @@ app.get('/clubs/:id', (req, res) => {
       res.status(404).json({ error: 'Club not found' });
     }
   });
-});
-
-// Setting up the route to display the form for editing an existing club
-app.get('/clubs/edit/:id', async (req, res) => {
-  try {
-    const id = parseInt(req.params.id);
-    const club = clubsDataBase.find((obj) => obj.id === id);
-    res.render('edit', { club });
-  } catch (err) {
-    res.status(404).json({ error: ` "error":"Club not found" ${err}` });
-  }
 });
 
 // Setting up the route to display the images of each club
@@ -102,35 +94,42 @@ app.post('/clubs/new', (req, res) => {
 });
 
 // Configuring the route to handle editing an existing club
-app.put('/clubs/update/:id', async (req, res) => {
+
+// read and write files with promises
+const readFileAsync = util.promisify(fs.readFile);
+const writeFileAsync = util.promisify(fs.writeFile);
+app.post('/clubs/edit/:id', async (req, res) => {
+  console.log('req.body', req.body);
+  const id = parseInt(req.params.id);
+
   try {
-    const id = parseInt(req.params.id);
-    const clubIndex = clubsDataBase.findIndex((obj) => obj.id === id);
-    if (clubIndex >= 0) {
-      const editedClub = {
-        id,
-        name: req.body.name,
-        shortName: req.body.shortName,
-        tla: req.body.tla,
-        crestUrl: req.body.crestUrl,
-        address: req.body.address,
-        phone: req.body.phone,
-        website: req.body.website,
-        email: req.body.email,
-        founded: req.body.founded,
-        clubColors: req.body.clubColors,
-      };
-      clubsDataBase[clubIndex] = editedClub;
-      fs.writeFile('clubs.json', JSON.stringify(clubsDataBase), (err) => {
-        if (err) throw err;
-        console.log(`${editedClub.id} updated`);
-        res.redirect(frontEndServer);
-      });
-    } else {
-      res.status(404).json({ error: 'Club not found' });
+    const data = await readFileAsync('clubs.json');
+    const clubs = JSON.parse(data);
+
+    const club = clubs.find((c) => c.id === id);
+    if (!club) {
+      return res.status(404).send({ error: `Club not found id=${id}` });
     }
-  } catch (err) {
-    res.status(500).json({ error: `${err}` });
+
+    // Validating the request body
+    const requiredProperties = ['name', 'shortName', 'tla', 'address', 'phone', 'website', 'email', 'founded', 'clubColors', 'venue'];
+    const missingProperties = requiredProperties.filter((prop) => !(prop in req.body));
+    if (missingProperties.length > 0) {
+      return res.status(400).send({ error: `Missing properties: ${missingProperties.join(', ')}` });
+    }
+
+    // Updating the club
+    Object.keys(req.body).forEach((prop) => {
+      if (prop in club) {
+        club[prop] = req.body[prop];
+      }
+    });
+
+    await writeFileAsync('clubs.json', JSON.stringify(clubs));
+    res.redirect('/');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al actualizar el club');
   }
 });
 
