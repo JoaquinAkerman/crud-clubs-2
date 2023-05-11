@@ -61,7 +61,7 @@ export const NewClubForm = () => {
             placeholder="www.clubexample.com"
           />
         </div>
-       
+
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input
@@ -96,38 +96,39 @@ export const NewClubForm = () => {
           <input type="text" id="venue" name="venue" placeholder="Club Venue" />
         </div>
         <div className="location-group">
-        <div className="form-group">
-          <label htmlFor="latitude">Latitude:</label>
-          <input
-            type="number"
-            id="latitude"
-            name="latitude"
-            min="-90"
-            max="90"
-            step="any"
-            placeholder="-34.615803"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="longitude">Longitude:</label>
-          <input
-            type="number"
-            id="longitude"
-            name="longitude"
-            min="-180"
-            max="180"
-            step="any"
-            placeholder="-58.503338"
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="latitude">Latitude:</label>
+            <input
+              type="number"
+              id="latitude"
+              name="latitude"
+              min="-90"
+              max="90"
+              step="any"
+              placeholder="-34.615803"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="longitude">Longitude:</label>
+            <input
+              type="number"
+              id="longitude"
+              name="longitude"
+              min="-180"
+              max="180"
+              step="any"
+              placeholder="-58.503338"
+            />
+          </div>
         </div>
         <div className="new-club-form-buttons">
-        <button id="save" type="submit" className="btn btn-primary save-button">
-          Save
-        </button>
-        <button id="cancel" type="reset" className="btn btn-secondary cancel-button">
-          Cancel
-        </button>
+          <button
+            id="save"
+            type="submit"
+            className="btn btn-primary save-button"
+          >
+            Save
+          </button>
         </div>
       </form>
     </div>

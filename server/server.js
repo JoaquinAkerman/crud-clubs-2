@@ -53,16 +53,15 @@ app.get('/clubs/:id', (req, res) => {
 });
 
 // Setting up the route to display the images of each club
-app.get('/public/static/images/:filename', (req, res) => {
-  const { filename } = req.params;
-  res.sendFile(filename, { root: './public/static/images' }, (err) => {
-    if (err) {
-      const status = err.status || 500;
-      const body = err.message || 'Something went wrong';
-      res.status(status).send(body);
-      res.status(err.status).end();
-    }
-  });
+app.get('/public/static/images/:filename', async (req, res) => {
+  try {
+    const { filename } = req.params;
+    await res.sendFile(filename, { root: './public/static/images' });
+  } catch (err) {
+    const status = err.status || 500;
+    const body = err.message || 'Something went wrong';
+    res.status(status).send(body);
+  }
 });
 
 /// ///////////////////POST////////////////////////
