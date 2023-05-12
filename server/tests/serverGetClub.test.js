@@ -10,7 +10,7 @@ let server;
 
 beforeAll((done) => {
   server = http.createServer(app);
-  server.listen(4000, (err) => {
+  server.listen(4002, (err) => {
     if (err) return done(err);
     done();
   });
@@ -23,7 +23,7 @@ jest.setTimeout(10000);
 
 describe('GET /', () => {
   it('should return status code 200 ', async () => {
-    const response = await axios.get('http://localhost:4000');
+    const response = await axios.get('http://localhost:4002');
     expect(response.status).toBe(200);
     expect(response.headers['content-type']).toBe(
       'application/json; charset=utf-8',
@@ -34,7 +34,7 @@ describe('GET /', () => {
 
 describe('GET /clubs/noID', () => {
   it('request with no ID should fail with return status code 404 and error message', (done) => {
-    http.get('http://localhost:4000/clubs/edit', (res) => {
+    http.get('http://localhost:4002/clubs/edit', (res) => {
       expect(res.statusCode).toBe(404);
       expect(res.headers['content-type']).toBe(
         'application/json; charset=utf-8',
@@ -53,7 +53,7 @@ describe('GET /clubs/noID', () => {
 
 describe('GET /clubs/57', () => {
   it('should return status code 200 and the club with id=57', async () => {
-    const response = await axios.get('http://localhost:4000/clubs/57');
+    const response = await axios.get('http://localhost:4002/clubs/57');
     expect(response.status).toBe(200);
     expect(response.headers['content-type']).toBe(
       'application/json; charset=utf-8',

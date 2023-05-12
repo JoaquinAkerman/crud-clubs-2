@@ -69,7 +69,7 @@ const ClubDetails = ({
       <p>Venue: {venue}</p>
       <Map latitude={parseFloat(latitude)} longitude={parseFloat(longitude)} />
       </div>
-      <button className="btn btn-danger" onClick={onClose}>
+      <button className="btn btn-danger close-details-button" onClick={onClose}>
         Close
       </button>
       {loading ? <div>Loading...</div> : null}

@@ -7,6 +7,7 @@
 }
 
 #title {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
   color: black;
   text-align: center;
   display: flex;
@@ -32,7 +33,16 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin: 5px;
+}
+
+.close-details-button{
+  border-radius: 5px;
+  border: none;
+  padding: 5px;
+  margin: 5px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .club-container {
@@ -45,6 +55,8 @@
   border-style: solid;
   border-radius: 5px;
   padding: 10px;
+  background-size: cover;
+  background-position: center;
 }
 .club-logo-container {
   display: flex;
@@ -109,6 +121,8 @@
 }
 
 .club-image {
+  margin: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
   width: 100px;
   height: 100px;
   border-radius: 5px;
@@ -117,12 +131,15 @@
 }
 
 .club-image-details {
+  margin: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
   width: 200px;
   height: 200px;
   border-radius: 5px;
   margin-right: 5px;
   float: right;
-  background-color: #f2f2f2;
+  
+
 }
 
 .club-details-container h2 {
@@ -195,6 +212,8 @@ ul {
   padding: 5px;
   border-radius: 5px;
   background-color: #e9e9e9;
+  background-size: cover;
+  background-position: center;
 }
 
 .new-club-form form {

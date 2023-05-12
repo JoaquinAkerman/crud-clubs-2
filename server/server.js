@@ -179,8 +179,7 @@ app.delete('/clubs/delete/:id', async (req, res) => {
   }
 });
 
-// code to prcoess the upload images
-
+// Process the upload of the club logo
 const storagePath = multer.diskStorage({
   // set the storage path
   destination(req, file, cb) {
@@ -191,9 +190,7 @@ const storagePath = multer.diskStorage({
     cb(null, `${req.params.id}.png`);
   },
 });
-
 const uploadImage = multer({ storage: storagePath });
-
 app.post('/clubs/upload/:id', uploadImage.single('clubLogo'), (req, res) => {
   // Check if the image input is empty
   if (!req.file) {
@@ -213,18 +210,15 @@ app.post('/reset-clubs', (req, res) => {
     // Reset clubs data
     const backupData = fs.readFileSync(pathbackupClubs);
     fs.writeFileSync(pathClubsDataBase, backupData);
-
     // Reset club images
     const clubData = JSON.parse(backupData.toString());
     clubData.forEach((club) => {
       const logoActualPath = path.join(logosActualesDir, `${club.id}.png`);
       const logoBackupPath = path.join(logosBackupDir, `${club.id}.png`);
-
       // Remove current logo if exists
       if (fs.existsSync(logoActualPath)) {
         fs.unlinkSync(logoActualPath);
       }
-
       // Copy backup logo to current logo path
       fs.copyFileSync(logoBackupPath, logoActualPath);
     });
