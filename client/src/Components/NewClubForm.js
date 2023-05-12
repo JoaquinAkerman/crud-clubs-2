@@ -4,11 +4,15 @@ import { serverBaseUrl } from "../modules/serverUrl";
 
 export const NewClubForm = () => {
   const serverNewClubBaseUrl = `${serverBaseUrl}/clubs/new`;
+  const serverImagesBaseUrl = `${serverBaseUrl}/public/static/images/`;
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className="new-club-form">
-      <h1>New club</h1>
+    <div className="new-club-form"  style={{
+      backgroundImage: `url("${serverImagesBaseUrl}newClubBackground.jpg")`,
+    }}
+    >
+      <h1 style={{color:"whitesmoke"}}>New club</h1>
 
       <form action={serverNewClubBaseUrl} method="POST">
         <div className="form-group">
@@ -105,7 +109,7 @@ export const NewClubForm = () => {
               min="-90"
               max="90"
               step="any"
-              placeholder="-34.615803"
+              defaultValue={-34.670267}
             />
           </div>
           <div className="form-group">
@@ -117,7 +121,7 @@ export const NewClubForm = () => {
               min="-180"
               max="180"
               step="any"
-              placeholder="-58.503338"
+              defaultValue={-58.370969}
             />
           </div>
         </div>

@@ -40,13 +40,21 @@ const ClubDetails = ({
   }, [id]);
 
   return (
-    <div className="clubDetails-container">
+    <div
+      className="club-details-container"
+      style={{
+        backgroundImage: `url("${serverImagesBaseUrl}backgroundSoccer3.jpg")`,
+      }}
+    >
+      
       <h2 id={`clubName${tla}`}>{name}</h2>
       <img
         className="club-image-details"
         src={clubImagePath}
         alt={`${name} logo`}
       />
+
+      <div className="club-info">
       <p>ID: {id}</p>
       <p>Shortname: {shortName}</p>
       <p>TLA: {tla}</p>
@@ -60,6 +68,7 @@ const ClubDetails = ({
       <p>Club colors: {clubColors}</p>
       <p>Venue: {venue}</p>
       <Map latitude={parseFloat(latitude)} longitude={parseFloat(longitude)} />
+      </div>
       <button className="btn btn-danger" onClick={onClose}>
         Close
       </button>
