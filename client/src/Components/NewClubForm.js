@@ -8,11 +8,13 @@ export const NewClubForm = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className="new-club-form"  style={{
-      backgroundImage: `url("${serverImagesBaseUrl}newClubBackground.jpg")`,
-    }}
+    <div
+      className="new-club-form"
+      style={{
+        backgroundImage: `url("${serverImagesBaseUrl}newClubBackground.jpg")`,
+      }}
     >
-      <h1 style={{color:"whitesmoke"}}>New club</h1>
+      <h1 style={{ color: "whitesmoke" }}>New club</h1>
 
       <form action={serverNewClubBaseUrl} method="POST">
         <div className="form-group">
@@ -135,6 +137,15 @@ export const NewClubForm = () => {
           </button>
         </div>
       </form>
+      <button
+        id="cancel"
+        onClick={() => {
+          window.location.href = "/";
+        }}
+        className="btn btn-secondary cancel-button"
+      >
+        Cancel
+      </button>
     </div>
   );
 };

@@ -8,7 +8,7 @@ const ClubList = ({ clubs, onClubSelect }) => {
   const serverImagesBaseUrl = `${serverBaseUrl}/public/static/images/`;
   const [editClub, setEditClub] = useState(null);
 
-  const handleClick = (club) => {
+  const handleShowDetails = (club) => {
     onClubSelect(club);
   };
 
@@ -16,7 +16,7 @@ const ClubList = ({ clubs, onClubSelect }) => {
     setEditClub(club);
   };
 
-  const handleCancel = () => {
+  const handleCancelUpdate = () => {
     setEditClub(null);
   };
 
@@ -28,6 +28,7 @@ const ClubList = ({ clubs, onClubSelect }) => {
       .catch((err) => console.error(err));
   };
 
+  // returns a list item with club info
   const renderClubItem = (club) => {
     return (
       <li
@@ -53,7 +54,7 @@ const ClubList = ({ clubs, onClubSelect }) => {
           </p>
         </div>
         <div className="club-buttons">
-          <button className="btn btn-info" onClick={() => handleClick(club)}>
+          <button className="btn btn-info" onClick={() => handleShowDetails(club)}>
             Details
           </button>{" "}
           <button className="btn btn-warning" onClick={() => handleEdit(club)}>
@@ -68,7 +69,7 @@ const ClubList = ({ clubs, onClubSelect }) => {
           <ClubEditionForm
             editClub={editClub}
             handleUpdateClub={handleUpdateClub}
-            handleCancel={handleCancel}
+            handleCancelUpdate={handleCancelUpdate}
           />
         )}
         <div className="upload-image-container">

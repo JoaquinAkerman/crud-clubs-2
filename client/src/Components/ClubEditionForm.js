@@ -1,7 +1,7 @@
 
 import React from "react";
 
-const ClubEditionForm = ({ editClub, handleUpdateClub, handleCancel }) => {
+const ClubEditionForm = ({ editClub, handleUpdateClub, handleCancelUpdate }) => {
   return (
     <div className="edit-club-form">
       <h3>Edit Club</h3>
@@ -115,7 +115,7 @@ const ClubEditionForm = ({ editClub, handleUpdateClub, handleCancel }) => {
                 <button className="btn btn-primary" type="submit">
                   Update
                 </button>
-                <button className="btn btn-danger" onClick={handleCancel}>
+                <button className="btn btn-danger" onClick={handleCancelUpdate}>
                   Cancel
                 </button>
               </div>
