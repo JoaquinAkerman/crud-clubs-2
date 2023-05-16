@@ -8,12 +8,12 @@ To get started with the project, you need to install the dependencies in both th
 1. Open a terminal in the project's root directory.
 2. Run the following command to install the dependencies in the `client` directory:
 
-   ```Terminal
+   ```
    npm run install-deps
 
     Next, run the following command to install the dependencies in the server directory:
 
-    Terminal
+    
 
     npm run install-deps
 
@@ -25,19 +25,19 @@ Once the dependencies are installed, you can start the project by following thes
 
     To start the server, run the following command:
 
-    bash
+    
 
 npm run start-server
 
 To start the client application, run the following command:
 
-terminal
+
 
 npm run start-client
 
 Alternatively, you can start both the server and the client application at the same time with the following command:
 
-bash
+
 
     npm run start
 
@@ -51,6 +51,6 @@ If you want to run the tests, follow these steps:
 
     Run the following command to execute all the tests in the client and server directories:
 
-    bash
+   
 
 npm run test-all
