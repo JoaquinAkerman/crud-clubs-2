@@ -27,9 +27,7 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "babel-jest": "^27.2.5",
-    "babel-preset-react-app": "^10.0.0",
-    "concurrently": "^8.0.1",
+    "concurrently": "^6.4.0",
     "nodemon": "^2.0.22"
   },
   "engines": {
