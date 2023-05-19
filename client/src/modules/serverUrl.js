@@ -1,1 +1,2 @@
-export const serverBaseUrl = 'http://localhost:3030';
+export const serverBaseUrl = 'http://localhost:3030/clubs';
+

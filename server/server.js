@@ -12,7 +12,7 @@ const app = express();
 const frontEndServer = 'http://localhost:3000';
 app.use(cors());
 const corsOptions = {
-  origin: frontEndServer,
+  origin: '*',
 };
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -29,13 +29,18 @@ app.use((req, res, next) => {
 });
 
 // // Setting up the root route to display all clubs
-app.get('/', (req, res) => {
-  fs.readFile('clubs.json', (err, data) => {
-    if (err) throw err;
+app.get('/clubs', async (req, res) => {
+  try {
+    const data = await fs.promises.readFile('clubs.json');
     const clubs = JSON.parse(data);
+    console.log(clubs);
     res.json({ clubs });
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
+
 
 // Setting up the route to display a particular club
 app.get('/clubs/:id', (req, res) => {
@@ -53,7 +58,7 @@ app.get('/clubs/:id', (req, res) => {
 });
 
 // Setting up the route to display the images of each club
-app.get('/public/static/images/:filename', async (req, res) => {
+app.get('/clubs/public/static/images/:filename', async (req, res) => {
   try {
     const { filename } = req.params;
     await res.sendFile(filename, { root: './public/static/images' });
@@ -201,7 +206,7 @@ app.post('/clubs/upload/:id', uploadImage.single('clubLogo'), (req, res) => {
 });
 
 // code to process the reset of the clubs
-app.post('/reset-clubs', (req, res) => {
+app.post('/clubs/reset-clubs', (req, res) => {
   const pathbackupClubs = './backupClubs/clubs.json';
   const pathClubsDataBase = './clubs.json';
   const logosActualesDir = './public/static/images';

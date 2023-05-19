@@ -3,7 +3,7 @@ import React from "react";
 import { serverBaseUrl } from "../modules/serverUrl";
 
 export const NewClubForm = () => {
-  const serverNewClubBaseUrl = `${serverBaseUrl}/clubs/new`;
+  const serverNewClubBaseUrl = `${serverBaseUrl}/new`;
   const serverImagesBaseUrl = `${serverBaseUrl}/public/static/images/`;
   const currentYear = new Date().getFullYear();
 

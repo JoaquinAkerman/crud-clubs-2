@@ -2,15 +2,16 @@
   "name": "crud-clubs-2",
   "version": "1.0.0",
   "description": "Crud clubs 2",
-  "main": "server.js",
   "scripts": {
-    "install-deps": "cd client && npm install && cd ../server && npm install",
+    "install-deps": "npm install && cd server && npm install && cd ../client && npm install",
     "start-server": "cd server && npm run start",
     "start-client": "cd client && npm run start",
     "start": "concurrently \"npm run start-server\" \"npm run start-client\"",
-    "dev": "nodemon server.js",
+    "dev": "currently --label server --label client \"nodemon server.js\" \"cd client && npm run start\"",
     "build": "cd client && npm run build",
-    "test-all": "cd client && npm run test && cd ../server && npm run test"
+    "test-client": "cd client && npm run test",
+    "test-server": "cd server && npm run test",
+    "test-all": "concurrently \"cd client && npm run test\" \"cd server && npm run test\""
   },
   "keywords": [
     "node",

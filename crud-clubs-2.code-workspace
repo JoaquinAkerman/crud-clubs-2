@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"jest.disabledWorkspaceFolders": [
+			"crud-clubs-2",
+			"server",
+			"crud-clubs-2",
+			"client"
+		]
+	}
+}

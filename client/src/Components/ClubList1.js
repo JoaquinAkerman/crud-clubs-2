@@ -8,6 +8,9 @@ const ClubList = ({ clubs, onClubSelect }) => {
   const serverImagesBaseUrl = `${serverBaseUrl}/public/static/images/`;
   const [editClub, setEditClub] = useState(null);
 
+  // sort clubs by name
+  clubs.sort((a, b) => a.name.localeCompare(b.name));
+
   const handleShowDetails = (club) => {
     onClubSelect(club);
   };
@@ -54,7 +57,10 @@ const ClubList = ({ clubs, onClubSelect }) => {
           </p>
         </div>
         <div className="club-buttons">
-          <button className="btn btn-info" onClick={() => handleShowDetails(club)}>
+          <button
+            className="btn btn-info"
+            onClick={() => handleShowDetails(club)}
+          >
             Details
           </button>{" "}
           <button className="btn btn-warning" onClick={() => handleEdit(club)}>
@@ -75,7 +81,7 @@ const ClubList = ({ clubs, onClubSelect }) => {
         <div className="upload-image-container">
           <span className="upload-label">Upload club logo</span>
           <form
-            action={`${serverBaseUrl}/clubs/upload/${club.id}`}
+            action={`${serverBaseUrl}/upload/${club.id}`}
             method="POST"
             encType="multipart/form-data"
           >
