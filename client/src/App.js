@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 
 import ClubDetails from './Components/ClubDetails';
-import ClubList from './Components/ClubList';
+import ClubList1 from './Components/ClubList1';
 import Navbar from './Components/Navbar';
 import Title from './Components/Title';
 
@@ -62,7 +62,7 @@ class App extends Component {
     const { clubs } = this.state;
   
     return (
-      <ClubList
+      <ClubList1
         clubs={clubs}
         onClubSelect={this.handleClubSelect}
       />

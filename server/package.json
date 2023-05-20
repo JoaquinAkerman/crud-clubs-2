@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "nodemon index.js",
-    "test": "jest --collect-coverage",
+    "test": "jest --collect-coverage && jest --watchAll",
     "test-dev": "jest --watchAll",
     "clear_jest": "jest --clearCache"
   },

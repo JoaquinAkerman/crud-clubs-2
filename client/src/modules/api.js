@@ -11,7 +11,7 @@ export const fetchClubs = () => {
 };
 
 export const handleDelete = (club) => {
-  const serverDeleteClubUrl = `${serverBaseUrl}/clubs/delete`;
+  const serverDeleteClubUrl = `${serverBaseUrl}/delete`;
     const confirmed = window.confirm(
     `Are you sure you want to delete the club "${club.name}"?`
   );
@@ -39,14 +39,14 @@ export const handleDelete = (club) => {
 export const handleUpdate = (club) => {
   console.log(club);
 
-  // Verificar que todas las propiedades requeridas estén presentes en el objeto "club"
+  // check that the club object has the required properties
   const requiredProperties = ["name", "shortName"];
   const missingProperties = requiredProperties.filter((prop) => !(prop in club));
   if (missingProperties.length > 0) {
     throw new Error(`Missing properties: ${missingProperties.join(", ")}`);
   }
 
-  return fetch(`${serverBaseUrl}/clubs/edit/${club.id}`, {
+  return fetch(`${serverBaseUrl}/edit/${club.id}`, {
     method: "post",
     headers: {
       "Content-Type": "application/json",
