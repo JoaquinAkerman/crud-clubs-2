@@ -58,6 +58,7 @@ app.get('/clubs/:id', (req, res) => {
 
 // Setting up the route to display the images of each club
 app.get('/clubs/public/static/images/:filename', async (req, res) => {
+  console.log('req.params', req.params);
   try {
     const { filename } = req.params;
     await res.sendFile(filename, { root: './public/static/images' });
