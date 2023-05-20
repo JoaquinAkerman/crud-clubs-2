@@ -35,6 +35,7 @@ const ClubList = ({ clubs, onClubSelect }) => {
   const renderClubItem = (club) => {
     return (
       <li
+        id={`${club.tla}-container`}
         key={club.id}
         className="club-container"
         style={{

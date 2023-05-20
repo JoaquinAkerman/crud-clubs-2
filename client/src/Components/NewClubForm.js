@@ -129,7 +129,7 @@ export const NewClubForm = () => {
         </div>
         <div className="new-club-form-buttons">
           <button
-            id="save"
+            id="save-button"
             type="submit"
             className="btn btn-primary save-button"
           >
@@ -138,7 +138,7 @@ export const NewClubForm = () => {
         </div>
       </form>
       <button
-        id="cancel"
+        id="cancel-button"
         onClick={() => {
           window.location.href = "/";
         }}
