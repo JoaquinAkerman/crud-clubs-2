@@ -33,7 +33,6 @@ app.get('/clubs', async (req, res) => {
   try {
     const data = await fs.promises.readFile('clubs.json');
     const clubs = JSON.parse(data);
-    console.log(clubs);
     res.json({ clubs });
   } catch (err) {
     console.error(err);
