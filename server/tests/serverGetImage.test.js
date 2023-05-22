@@ -18,11 +18,11 @@ afterAll((done) => {
 });
 jest.setTimeout(10000);
 
-describe('GET /public/static/images/57.png', () => {
+describe('GET clubs/public/static/images/57.png', () => {
   it('should return the file with the given filename', async () => {
     const filename = '57.png';
     const response = await request(app).get(
-      `/public/static/images/${filename}`,
+      `/clubs/public/static/images/${filename}`,
     );
 
     expect(response.status).toBe(200);
@@ -33,7 +33,7 @@ describe('GET /public/static/images/57.png', () => {
   it('should return an error if the file does not exist', async () => {
     const filename = 'nonexistent.png';
     const response = await request(app).get(
-      `/public/static/images/${filename}`,
+      `/clubs/public/static/images/${filename}`,
     );
     expect(response.status).toBe(404);
   });

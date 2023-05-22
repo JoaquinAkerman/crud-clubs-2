@@ -23,7 +23,7 @@ jest.setTimeout(10000);
 
 describe('GET /', () => {
   it('should return status code 200 ', async () => {
-    const response = await axios.get('http://localhost:4002');
+    const response = await axios.get('http://localhost:4002/clubs');
     expect(response.status).toBe(200);
     expect(response.headers['content-type']).toBe(
       'application/json; charset=utf-8',
