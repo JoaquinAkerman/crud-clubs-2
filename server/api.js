@@ -5,7 +5,7 @@ const clubsDataBase = require('./clubs.json');
 
 module.exports = async (req, res) => {
   if (req.method === 'GET') {
-    if (req.url === '/api/clubs') {
+    if (req.url === '/clubs') {
       try {
         const clubs = await fs.promises.readFile('clubs.json');
         res.setHeader('Content-Type', 'application/json');
@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
       res.status(404).json({ error: 'Not found' });
     }
   } else if (req.method === 'POST') {
-    if (req.url === '/api/clubs/new') {
+    if (req.url === '/clubs/new') {
       const frontEndLocalhost = 'http://localhost:3000';
       try {
         const data = await fs.promises.readFile('clubs.json');
@@ -50,7 +50,7 @@ module.exports = async (req, res) => {
       res.status(404).json({ error: 'Not found' });
     }
   } else if (req.method === 'DELETE') {
-    if (req.url.startsWith('/api/clubs/delete/')) {
+    if (req.url.startsWith('/clubs/delete/')) {
       const id = parseInt(req.url.split('/').pop());
       try {
         const clubIndex = clubsDataBase.findIndex((obj) => obj.id === id);
