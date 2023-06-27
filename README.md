@@ -36,4 +36,21 @@ If you want to run the unit tests, follow these steps:
     Run the following command to execute all the tests in the client and server directories:
    
 
-npm run test-all
+      npm run test-all
+
+
+Testing with cypress
+
+If you want to run the cypress tests, follow these steps:
+
+    Make sure you have installed the dependencies as mentioned in the installation section.
+
+    Open a terminal in the project's root directory.
+
+    Run the following command to execute all the tests in the client directories:
+    first run the server with npm run start, and then type 
+    ``cd client`` 
+    and then type
+    npm run cypress-open
+
+```
