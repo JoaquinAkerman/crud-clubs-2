@@ -48,9 +48,10 @@ If you want to run the cypress tests, follow these steps:
     Open a terminal in the project's root directory.
 
     Run the following command to execute all the tests in the client directories:
-    first run the server with npm run start, and then type 
-    ``cd client`` 
-    and then type
+    first run the server with npm run start, and then type: 
+    
+    cd client
+    
+    and then type:
+    
     npm run cypress-open
-
-```
