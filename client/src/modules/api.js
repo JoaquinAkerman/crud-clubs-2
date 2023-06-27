@@ -37,7 +37,6 @@ export const handleDelete = (club) => {
 
 
 export const handleUpdate = (club) => {
-  console.log(club);
 
   // check that the club object has the required properties
   const requiredProperties = ["name", "shortName"];

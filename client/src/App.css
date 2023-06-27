@@ -36,7 +36,7 @@
   margin: 5px;
 }
 
-.close-details-button{
+.close-details-button {
   border-radius: 5px;
   border: none;
   padding: 5px;
@@ -139,8 +139,6 @@
   border-radius: 5px;
   margin-right: 5px;
   float: right;
-  
-
 }
 
 .club-details-container h2 {
@@ -289,4 +287,29 @@ ul {
   justify-content: center;
   margin-top: 10px;
   margin: 10px;
+}
+
+.warning {
+  color: #f8f2f2;
+  background-color: rgb(255, 0, 0);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.warning p {
+  margin: 0;
+}
+
+.demo-link {
+  color: #000000;
+  background-color: rgb(236, 227, 227);
+  max-width: 680px;
+  padding: 10px;
+  white-space: nowrap;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  border-radius: 5px;
 }

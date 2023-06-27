@@ -4,6 +4,8 @@ import { ClubEditionForm } from "./ClubEditionForm";
 import { handleDelete, handleUpdate } from "../modules/api";
 import { serverBaseUrl } from "../modules/serverUrl";
 
+
+
 const ClubList = ({ clubs, onClubSelect }) => {
   const serverImagesBaseUrl = `${serverBaseUrl}/public/static/images/`;
   const [editClub, setEditClub] = useState(null);

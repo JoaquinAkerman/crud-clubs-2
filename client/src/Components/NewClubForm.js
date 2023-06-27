@@ -1,8 +1,9 @@
 import React from "react";
-
 import { serverBaseUrl } from "../modules/serverUrl";
 
-export const NewClubForm = () => {
+import { demoWarning } from "../utils/demoWarning";
+
+const NewClubForm = () => {
   const serverNewClubBaseUrl = `${serverBaseUrl}/new`;
   const serverImagesBaseUrl = `${serverBaseUrl}/public/static/images/`;
   const currentYear = new Date().getFullYear();
@@ -15,6 +16,8 @@ export const NewClubForm = () => {
       }}
     >
       <h1 style={{ color: "whitesmoke" }}>New club</h1>
+
+      {demoWarning}
 
       <form action={serverNewClubBaseUrl} method="POST">
         <div className="form-group">
@@ -35,6 +38,7 @@ export const NewClubForm = () => {
             placeholder="Club Shortname"
           />
         </div>
+
         <div className="form-group">
           <label htmlFor="tla">TLA:</label>
           <input type="text" id="tla" name="tla" placeholder="Club TLA" />
@@ -67,7 +71,6 @@ export const NewClubForm = () => {
             placeholder="www.clubexample.com"
           />
         </div>
-
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input
@@ -127,6 +130,7 @@ export const NewClubForm = () => {
             />
           </div>
         </div>
+
         <div className="new-club-form-buttons">
           <button
             id="save-button"
@@ -149,3 +153,5 @@ export const NewClubForm = () => {
     </div>
   );
 };
+
+export { NewClubForm };
